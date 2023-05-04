@@ -3,11 +3,11 @@ import java.util.*;
 public class Max3SAT {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
-        int n = in.nextInt(); // number of variables
-        int m = in.nextInt(); // number of clauses
-        List<int[]> clauses = new ArrayList<>(); // list of clauses
+        int n = in.nextInt(); // Number of variables
+        int m = in.nextInt(); // Number of clauses
+        List<int[]> clauses = new ArrayList<>(); // List of clauses
 
-        // read input
+        // Input
         for (int i = 0; i < m; i++) {
             int x = in.nextInt();
             int y = in.nextInt();
@@ -17,16 +17,16 @@ public class Max3SAT {
 
         in.close();
 
-        // initialize random assignment
+        // Initialize random assignment
         int[] assignment = new int[n];
         Random rand = new Random();
         for (int i = 0; i < n; i++) {
             assignment[i] = rand.nextBoolean() ? 1 : -1;
         }
 
-        // repeat for log n rounds
+        // Repeat for log n rounds
         for (int r = 0; r < Math.log(n) / Math.log(2); r++) {
-            // evaluate each clause under current assignment
+            // Evaluate each clause under current assignment
             int[] clauseValues = new int[m];
             for (int i = 0; i < m; i++) {
                 int[] clause = clauses.get(i);
@@ -38,7 +38,7 @@ public class Max3SAT {
                         + (assignment[Math.abs(z) - 1] * z < 0 ? 0 : 1);
             }
 
-            // pick the best variable to flip
+            // Pick the best variable to flip
             int bestVar = -1;
             int bestDelta = 0;
             for (int i = 0; i < n; i++) {
@@ -57,13 +57,13 @@ public class Max3SAT {
                 }
             }
 
-            // flip the best variable
+            // Flip the best variable
             if (bestVar != -1) {
                 assignment[bestVar] *= -1;
             }
         }
 
-        // output final assignment
+        // Output final assignment
         for (int i = 0; i < n; i++) {
             System.out.print(assignment[i] + " ");
         }
